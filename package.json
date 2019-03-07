@@ -1,0 +1,11 @@
+{
+  "name": "weatherapp-vanillajs",
+  "version": "1.0.0",
+  "description": "A simple weather app written in JS",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ovadia Shalom",
+  "license": "MIT"
+}
