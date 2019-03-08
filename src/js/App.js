@@ -1,6 +1,4 @@
-
 import { WeatherView } from './WeatherView';
-import { WeatherAPI } from './WeatherAPI';
 
 var weather = new WeatherView();
 
@@ -10,4 +8,5 @@ weather
     .showCelsiusElements()
     .showFahrenheitElements();
 
+//for debugging
 window.weather = weather;
