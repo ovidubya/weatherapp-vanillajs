@@ -18,19 +18,15 @@
         <div class="search">
             <input placeholder="Enter a location" type="search" name="search" id="search">
             <button>Go</button>
-            <button id="temp-type">Toggle Fahrenheit</button>
+            <button onclick="runner.toggleF()" id="toggle-f">Toggle Fahrenheit</button>
+            <button onclick="runner.toggleC()" id="toggle-c">Toggle Celsius</button>
         </div>
 
         <h3>Current Weather</h3>
+        
         <!-- Current Weather -->
         <div class="current">
-            
-            <img src="//cdn.apixu.com/weather/64x64/night/122.png" alt="weather icon">
-            <p class="current-location">Chicago, Illinois</p>
-            <p class="current-weather-f hide-f">Overcast 27°F </p>
-            <p class="current-weather-c hide-c">Overcast 27°C </p>
-
-            <!-- Dynamically calculated here -->
+            <!-- Dynamic -->
         </div>
         
         <h3>Forecast</h3>
