@@ -13,3 +13,23 @@
 - ~~Run well in the latest version of Chrome~~
 - Include tests that exercise functionality
 - ~~Include a readme that says how to view the app~~
+
+
+## Install
+
+```sh
+$ npm install
+```
+
+
+## Run dev server
+
+```sh
+$ npm run dev
+```
+
+### Build 
+
+```sh
+$ npm run build
+```

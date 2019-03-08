@@ -4,8 +4,12 @@
   "description": "A simple weather app written in JS",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "author": "Ovadia Shalom",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "parcel": "^1.12.0"
+  }
 }
