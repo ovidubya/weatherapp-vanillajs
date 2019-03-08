@@ -5,7 +5,7 @@
 
 - ~~Written in JavaScript~~
 - ~~Retrieves data from Apixu API~~
-- Display today's weather and the 5-day forecast
+- ~~Display today's weather and the 5-day forecast~~
 - ~~Uses the current location (if supported)~~
 - Allow choosing a new location
 - ~~Allow choosing to display in Fahrenheit or Celsius~~
