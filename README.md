@@ -11,7 +11,7 @@
 - ~~Allow choosing to display in Fahrenheit or Celsius~~
 - ~~Show the weather with reasonable presentation~~
 - ~~Run well in the latest version of Chrome~~
-- Include tests that exercise functionality
+- ~~Include tests that exercise functionality~~
 - ~~Include a readme that says how to view the app~~
 
 
@@ -28,8 +28,14 @@ $ npm install
 $ npm run dev
 ```
 
-### Build 
+## Build 
 
 ```sh
 $ npm run build
+```
+
+## Testing
+
+```sh
+$ npm test
 ```

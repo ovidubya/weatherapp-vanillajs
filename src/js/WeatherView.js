@@ -10,7 +10,10 @@ var api = new WeatherAPI('63044e3b457c463582e223928190703');
  */
 
 export class WeatherView {
-
+    constructor() {
+        this.displayCelsius = true;
+        this.displayFahrenheit = true;
+    }
     getForecastView(customLocation = null) {
         api.getForecastJSON(customLocation).then(forecastData => {
             var forecastTable = document.querySelector('div.forecast');
