@@ -17,9 +17,9 @@
         <!-- Search bar -->
         <div class="search">
             <input placeholder="Enter a location" type="search" name="search" id="search">
-            <button>Go</button>
-            <button onclick="runner.toggleF()" id="toggle-f">Toggle Fahrenheit</button>
-            <button onclick="runner.toggleC()" id="toggle-c">Toggle Celsius</button>
+            <button onclick="weather.updateLocation()" >Go</button>
+            <button onclick="weather.toggleF()" id="toggle-f">Toggle Fahrenheit</button>
+            <button onclick="weather.toggleC()" id="toggle-c">Toggle Celsius</button>
         </div>
 
         <h3>Current Weather</h3>
@@ -36,7 +36,7 @@
         </div>
     </main>
     <footer></footer>
-    <script src="js/main.js"></script>
+    <script src="js/App.js"></script>
 </body>
 
 </html>

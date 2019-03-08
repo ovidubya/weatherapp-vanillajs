@@ -1,13 +1,13 @@
 
 import { WeatherView } from './WeatherView';
+import { WeatherAPI } from './WeatherAPI';
 
+var weather = new WeatherView();
 
-var runner = new WeatherView();
+weather
+    .getForecastView()
+    .getCurrentView()
+    .showCelsiusElements()
+    .showFahrenheitElements();
 
-runner.getForecastView();
-runner.getCurrentView();
-
-runner.showCelsiusElements();
-runner.showFahrenheitElements();
-
-window.runner = runner;
+window.weather = weather;
