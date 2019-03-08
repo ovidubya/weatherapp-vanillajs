@@ -33,38 +33,9 @@ export class WeatherAPI {
      * so first check if we are on a https protocal otherwise just do the zipcode
      */
     getCurrentJSON(customLocation) {
-        if(customLocation) {
-            return fetch(this.currentAPI + `&q=${customLocation}`)
-                .then(data => {
-                    if(data.status != 200) {
-                        throw new Error("Not valid location");
-                    }else {
-                        return data.json();
-                    }
-                })
-                .then(result => result)
-                .catch(err => alert(err.message));
-        }else {
-            if (this.isGeo && this.isHttps) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-    
-    
-                    return fetch(this.currentAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
-                        .then(data => {
-                            if(data.status != 200) {
-                                throw new Error("Not valid location");
-                            }else {
-                                return data.json();
-                            }
-                        })
-                        .then(result => result)
-                        .catch(err => alert(err.message));
-                });
-    
-    
-            } else {
-    
-                return fetch(this.currentAPI + '&q=60661')
+        return new Promise((resolve, reject) => {
+            if(customLocation) {
+                fetch(this.currentAPI + `&q=${customLocation}`)
                     .then(data => {
                         if(data.status != 200) {
                             throw new Error("Not valid location");
@@ -72,48 +43,58 @@ export class WeatherAPI {
                             return data.json();
                         }
                     })
-                    .then(result => result)
-                    .catch(err => alert(err.message));
-            }
-        }
+                    .then(result => resolve(result))
+                    .catch(err => reject("error"));
+            }else {
+                if (this.isGeo && this.isHttps) {
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                        fetch(this.currentAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
+                            .then(data => {
+                                if(data.status != 200) {
+                                    throw new Error("Not valid location");
+                                }else {
+                                    return data.json();
+                                }
+                            })
+                            .then(result => resolve(result))
+                            .catch(err => reject("error"));
+                    }, (error) => {
+                        fetch(this.currentAPI + '&q=60661')
+                            .then(data => {
+                                if(data.status != 200) {
+                                    throw new Error("Not valid location");
+                                }else {
+                                    return data.json();
+                                }
+                            })
+                            .then(result => resolve(result))
+                            .catch(err => reject("error"));
+                    });
         
+        
+                } else {
+        
+                    fetch(this.currentAPI + '&q=60661')
+                        .then(data => {
+                            if(data.status != 200) {
+                                throw new Error("Not valid location");
+                            }else {
+                                return data.json();
+                            }
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject("error"));
+                }
+            }
+        });
     }
     /**
      * Returns the 5 day forcast of the current location
      */
     getForecastJSON(customLocation) {
-        if(customLocation) {
-            return fetch(this.forecastAPI + `&q=${customLocation}`)
-                .then(data => {
-                    if(data.status != 200) {
-                        throw new Error("Not valid location");
-                    }else {
-                        return data.json();
-                    }
-                })
-                .then(result => result)
-                .catch(err => alert(err.message));
-        }else {
-            if (this.isGeo && this.isHttps) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-    
-    
-                    return fetch(this.forecastAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
-                        .then(data => {
-                            if(data.status != 200) {
-                                throw new Error("Not valid location");
-                            }else {
-                                return data.json();
-                            }
-                        })
-                        .then(result => result)
-                        .catch(err => alert(err.message));
-                });
-    
-    
-            } else {
-    
-                return fetch(this.forecastAPI + '&q=60661')
+        return new Promise((resolve, reject) => {
+            if(customLocation) {
+                fetch(this.forecastAPI + `&q=${customLocation}`)
                     .then(data => {
                         if(data.status != 200) {
                             throw new Error("Not valid location");
@@ -121,10 +102,51 @@ export class WeatherAPI {
                             return data.json();
                         }
                     })
-                    .then(result => result)
-                    .catch(err => alert(err.message));
-            }
-        }
+                    .then(result => resolve(result))
+                    .catch(err => reject("error"));
+            }else {
+                if (this.isGeo && this.isHttps) {
+                    navigator.geolocation.getCurrentPosition((pos) => {
         
+        
+                        fetch(this.forecastAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
+                            .then(data => {
+                                if(data.status != 200) {
+                                    throw new Error("Not valid location");
+                                }else {
+                                    return data.json();
+                                }
+                            })
+                            .then(result => resolve(result))
+                            .catch(err => reject("error"));
+                    },(error) => {
+                        fetch(this.forecastAPI + '&q=60661')
+                            .then(data => {
+                                if(data.status != 200) {
+                                    throw new Error("Not valid location");
+                                }else {
+                                    return data.json();
+                                }
+                            })
+                            .then(result => resolve(result))
+                            .catch(err => reject("error"));
+                    });
+        
+        
+                } else {
+        
+                    fetch(this.forecastAPI + '&q=60661')
+                        .then(data => {
+                            if(data.status != 200) {
+                                throw new Error("Not valid location");
+                            }else {
+                                return data.json();
+                            }
+                        })
+                        .then(result => resolve(result))
+                        .catch(err => reject("error"));
+                }
+            }
+        });   
     }
 }
