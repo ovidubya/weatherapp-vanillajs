@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Weather Application</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
-    
+    <header></header>
+    <main>
+        <h2 id="app-title">Vanilla Weather App</h2>
+
+        <!-- Search bar -->
+        <div class="search">
+            <input placeholder="Enter a location" type="search" name="search" id="search">
+            <button>Go</button>
+            <button id="temp-type">Toggle Fahrenheit</button>
+        </div>
+
+        <h3>Current Weather</h3>
+        <!-- Current Weather -->
+        <div class="current">
+            
+            <img src="//cdn.apixu.com/weather/64x64/night/122.png" alt="weather icon">
+            <p class="current-location">Chicago, Illinois</p>
+            <p class="current-weather-f hide-f">Overcast 27°F </p>
+            <p class="current-weather-c hide-c">Overcast 27°C </p>
+
+            <!-- Dynamically calculated here -->
+        </div>
+        
+        <h3>Forecast</h3>
+        <!-- Forecast weather -->
+        <div class="forecast">
+            <!-- Dynamic -->
+        </div>
+    </main>
+    <footer></footer>
     <script src="js/main.js"></script>
 </body>
+
 </html>
