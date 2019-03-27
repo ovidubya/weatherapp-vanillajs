@@ -1,7 +1,9 @@
 /**
  * Weather API used to update the WeatherView
  */
-export class WeatherAPI {
+
+import 'babel-polyfill';
+ export class WeatherAPI {
 
     /**
      * Set up initial currentAPI url for future requests

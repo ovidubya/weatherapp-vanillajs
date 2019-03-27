@@ -21,7 +21,7 @@ export class WeatherView {
         if (!!forecastTable) {
             forecastTable.innerHTML = '';
         }
-        if (forecastData != 'error') {
+        if (forecastData) {
 
             var fiveDaysOfForecast = forecastData.forecast.forecastday,
                 table = document.createElement('table'),
@@ -77,6 +77,9 @@ export class WeatherView {
             forecastTable.appendChild(table);
 
         }
+        else {
+            alert('Error getting the data, check the console');
+        }
         return this;
     }
 
@@ -90,7 +93,7 @@ export class WeatherView {
         if (!!currentView) {
             currentView.innerHTML = '';
         }
-        if (weatherData != 'error') {
+        if (weatherData) {
             var image = document.createElement('img'),
                 location_text = document.createElement('p'),
                 currentWeatherinF = document.createElement('p'),
@@ -118,6 +121,9 @@ export class WeatherView {
             currentView.appendChild(currentWeatherinC);
 
 
+        }
+        else {
+            alert('Error getting the data, check the console');
         }
         return this;
     }
