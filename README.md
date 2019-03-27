@@ -14,6 +14,9 @@
 - ~~Include tests that exercise functionality~~
 - ~~Include a readme that says how to view the app~~
 
+## Features for 1.1
+
+- ~~Promise support in the WeatherAPI.js file~~
 
 ## Install
 
