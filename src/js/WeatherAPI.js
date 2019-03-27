@@ -2,19 +2,6 @@
  * Weather API used to update the WeatherView
  */
 export class WeatherAPI {
-    /**
-     * Returns if we are using https
-     */
-    get isHttps() {
-        return location.protocol == 'https:';
-    }
-
-    /**
-     * Return if geolocation is supported
-     */
-    get isGeo() {
-        return !!navigator.geolocation;
-    }
 
     /**
      * Set up initial currentAPI url for future requests
@@ -26,127 +13,78 @@ export class WeatherAPI {
         this.displayFahrenheit = true;
         this.displayCelsius = true;
     }
-
     /**
-     * Returns the current location if available, otherwise defaults to a hardcoded zip code
-     * navigator.geolocation isn't supported in all browsers, and it does require https and not http
-     * so first check if we are on a https protocal otherwise just do the zipcode
+     * Returns a promise with the cordinates of the user if they accept, otherwise rejects with the error
      */
-    getCurrentJSON(customLocation) {
+    getUserCordinates() {
         return new Promise((resolve, reject) => {
-            if(customLocation) {
-                fetch(this.currentAPI + `&q=${customLocation}`)
-                    .then(data => {
-                        if(data.status != 200) {
-                            throw new Error("Not valid location");
-                        }else {
-                            return data.json();
-                        }
-                    })
-                    .then(result => resolve(result))
-                    .catch(err => reject("error"));
-            }else {
-                if (this.isGeo && this.isHttps) {
-                    navigator.geolocation.getCurrentPosition((pos) => {
-                        fetch(this.currentAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
-                            .then(data => {
-                                if(data.status != 200) {
-                                    throw new Error("Not valid location");
-                                }else {
-                                    return data.json();
-                                }
-                            })
-                            .then(result => resolve(result))
-                            .catch(err => reject("error"));
-                    }, (error) => {
-                        fetch(this.currentAPI + '&q=60661')
-                            .then(data => {
-                                if(data.status != 200) {
-                                    throw new Error("Not valid location");
-                                }else {
-                                    return data.json();
-                                }
-                            })
-                            .then(result => resolve(result))
-                            .catch(err => reject("error"));
-                    });
-        
-        
-                } else {
-        
-                    fetch(this.currentAPI + '&q=60661')
-                        .then(data => {
-                            if(data.status != 200) {
-                                throw new Error("Not valid location");
-                            }else {
-                                return data.json();
-                            }
-                        })
-                        .then(result => resolve(result))
-                        .catch(err => reject("error"));
-                }
-            }
+            navigator.geolocation.getCurrentPosition((pos) => {
+                resolve(pos);
+            },(error) => {
+                reject(error);
+            });
+        });    
+    }
+    /**
+     * Returns a promise that has the resolved data of the JSON response of the current weather, otherwise rejects with the erorr message
+     * @param {any query that is valid from the apixu API} queryLocationString 
+     */
+    fetchCurrentJSON(queryLocationString) {
+        return new Promise((resolve, reject) => {
+            fetch(this.currentAPI + `&q=${queryLocationString}`)
+                .then(data => {
+                    if(data.status != 200) {
+                        throw new Error("Not valid location");
+                    }else {
+                        return data.json();
+                    }
+                })
+                .then(result => resolve(result))
+                .catch(err => reject(err));
         });
     }
     /**
-     * Returns the 5 day forcast of the current location
+     * Returns a promise that has the resolved data of the JSON response of the current forecast, otherwise rejects with the erorr message
+     * @param {any query that is valid from the apixu API} queryLocationString 
      */
-    getForecastJSON(customLocation) {
+    fetchForecastJSON(queryLocationString) {
         return new Promise((resolve, reject) => {
-            if(customLocation) {
-                fetch(this.forecastAPI + `&q=${customLocation}`)
-                    .then(data => {
-                        if(data.status != 200) {
-                            throw new Error("Not valid location");
-                        }else {
-                            return data.json();
-                        }
-                    })
-                    .then(result => resolve(result))
-                    .catch(err => reject("error"));
-            }else {
-                if (this.isGeo && this.isHttps) {
-                    navigator.geolocation.getCurrentPosition((pos) => {
-        
-        
-                        fetch(this.forecastAPI + `&q=${pos.coords.latitude},${pos.coords.longitude}`)
-                            .then(data => {
-                                if(data.status != 200) {
-                                    throw new Error("Not valid location");
-                                }else {
-                                    return data.json();
-                                }
-                            })
-                            .then(result => resolve(result))
-                            .catch(err => reject("error"));
-                    },(error) => {
-                        fetch(this.forecastAPI + '&q=60661')
-                            .then(data => {
-                                if(data.status != 200) {
-                                    throw new Error("Not valid location");
-                                }else {
-                                    return data.json();
-                                }
-                            })
-                            .then(result => resolve(result))
-                            .catch(err => reject("error"));
-                    });
-        
-        
-                } else {
-        
-                    fetch(this.forecastAPI + '&q=60661')
-                        .then(data => {
-                            if(data.status != 200) {
-                                throw new Error("Not valid location");
-                            }else {
-                                return data.json();
-                            }
-                        })
-                        .then(result => resolve(result))
-                        .catch(err => reject("error"));
-                }
-            }
-        });   
+            fetch(this.forecastAPI + `&q=${queryLocationString}`)
+                .then(data => {
+                    if(data.status != 200) {
+                        throw new Error("Not valid location");
+                    }else {
+                        return data.json();
+                    }
+                })
+                .then(result => resolve(result))
+                .catch(err => reject(err));
+        });
+    }
+    /**
+     * Returns the current JSON weather 
+     */    
+    async getCurrentJSON(customLocation = null) {
+        //Try to get the users location
+        var userCordinates = await this.getUserCordinates().catch(error => console.log('User did not accept location access', error));
+
+        if (userCordinates && customLocation == null) {
+            return await this.fetchCurrentJSON(`${userCordinates.coords.latitude},${userCordinates.coords.longitude}`).catch(error => console.log(error));
+        } else {
+            return await this.fetchCurrentJSON(customLocation || '60661').catch(error => console.log(error));
+        }
+    }
+    /**
+     * Returns the current JSON weather 
+     */
+    async getForecastJSON(customLocation = null) {
+        var userCordinates = await this.getUserCordinates().catch(error => console.log('User did not accept location access', error));
+
+        if(userCordinates && customLocation == null) {
+            return await this.fetchForecastJSON(`${userCordinates.coords.latitude},${userCordinates.coords.longitude}`).catch(error => console.log(error));
+        }
+        else {
+            return await this.fetchForecastJSON(customLocation || '60661').catch(error => console.log(error));
+        }
     }
 }
